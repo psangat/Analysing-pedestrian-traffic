@@ -15,6 +15,7 @@ trait SparkSessionWrapper extends Serializable {
     SparkSession.builder().config(conf).getOrCreate()
   }
 
+
   /** Stops the Spark session.
    */
   def stopSparkSession(): Unit = {

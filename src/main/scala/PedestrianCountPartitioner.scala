@@ -1,6 +1,7 @@
 import org.apache.spark.Partitioner
-import scala.util.control.Breaks._
+
 import scala.collection.mutable.ListBuffer
+import scala.util.control.Breaks._
 
 class PedestrianCountPartitioner(min: Int, max: Int, binSize: Int, var numParts: Int = 1) extends Partitioner {
 

@@ -1,10 +1,7 @@
-import org.apache.spark.{RangePartitioner, TaskContext}
+import org.apache.spark.TaskContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types.StructType
-
-import scala.collection.mutable.Map
-import scala.reflect.io.Path.extension
 
 object SparkUtils extends SparkSessionWrapper  {
   /** Reading the CSV file using Spark.

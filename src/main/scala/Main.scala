@@ -1,4 +1,5 @@
 import org.apache.spark.storage.StorageLevel
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.{functions => f}
 object Main extends SparkSessionWrapper {
 
@@ -21,21 +22,30 @@ object Main extends SparkSessionWrapper {
     //    val parsedSensorRDDWOHeader = SparkUtils.parseCSVData(sensorRDDWOHeader, new SensorLocation())
     //    SparkUtils.printPartitions(parsedSensorRDDWOHeader)
   }
-  def loadDataframe()={
+
+  def ETLData()={
     val pedestrianCountDF = SparkUtils.readCSV(Schema.pedestrianCount, Constants.pedestrianDataPath, true)
     val sensorLocationDF = SparkUtils.readCSV(Schema.sensorLocation, Constants.sensorDataPath, true)
 
-    val transformedPedestrianCountDF = pedestrianCountDF.withColumn("castedDateTime", f.to_timestamp(f.col("dateTime"), "MM/dd/yyyy hh:mm:ss a" ))
+    val transformedPedestrianCountDF = pedestrianCountDF
+      .withColumn("castedDateTime", f.to_timestamp(f.col("dateTime"), "MM/dd/yyyy hh:mm:ss a" ))
     transformedPedestrianCountDF.show(2, truncate = false)
     transformedPedestrianCountDF.printSchema()
 
     val transformedSensorLocationDF = sensorLocationDF
+      .drop(f.col("location"))
+      .withColumn("location", f.array(f.col("latitude"), f.col("longitude")))
       .withColumn("castedInstallationDate", f.to_date(f.col("installationDate"), "yyyy/MM/dd"))
-//      .withColumn("location", f.split(f.col("location" )))
+      .drop("installationDate")
+      .withColumnRenamed("castedInstallationDate", "installationDate")
+
+    transformedSensorLocationDF.show(2, truncate = false)
+    transformedSensorLocationDF.printSchema()
   }
 
   def main(args: Array[String]): Unit = {
-    loadDataframe()
-    //    stopSparkSession()
+    Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
+    ETLData()
+    stopSparkSession()
   }
 }
