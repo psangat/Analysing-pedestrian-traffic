@@ -4,6 +4,6 @@ object Constants {
   val sensorDataPath = "data/Pedestrian_Counting_System_-_Sensor_Locations.csv"
 //  val passengersDataPath = "data/passengers.csv"
 //  val testPassengersDataPath = "testData/testPassengersData.csv"
-  val configPath = "config.cfg"
+  val configPath = "sparkConfig.cfg"
 //  val testConfigPath = "testData/testConfig.cfg"
 }

@@ -1,6 +1,8 @@
 import org.apache.spark.storage.StorageLevel
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.{functions => f}
+
+import scala.util.Try
 object Main extends SparkSessionWrapper {
 
   def loadData()={
@@ -44,8 +46,14 @@ object Main extends SparkSessionWrapper {
   }
 
   def main(args: Array[String]): Unit = {
-    Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
-    ETLData()
-    stopSparkSession()
+    //    Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
+    //    ETLData()
+    //    stopSparkSession()
+    val local = System.getenv("spark.local").equals("true")
+
+    print(local)
+    //    val LocalSpark:Boolean = Try(
+    //      System.getenv("spark.local").equals("true"))
+    //      .getOrElse(false)
   }
 }
