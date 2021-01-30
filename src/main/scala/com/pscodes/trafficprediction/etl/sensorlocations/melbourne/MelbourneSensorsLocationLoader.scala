@@ -1,9 +1,9 @@
 package com.pscodes.trafficprediction.etl.sensorlocations.melbourne
 
 import com.pscodes.trafficprediction.common.config.Configuration
-import com.pscodes.trafficprediction.common.feeds.sensorlocations.SensorLocationsColumnNames
+import com.pscodes.trafficprediction.common.feeds.sensorlocations.{SensorLocations, SensorLocationsColumnNames}
 import com.pscodes.trafficprediction.etl.sensorlocations.SensorLocationsLoader
-import org.apache.spark.sql.{DataFrame, SparkSession, functions => f}
+import org.apache.spark.sql.{DataFrame, Encoders, SparkSession, functions => f}
 
 /**
  * Implementation of the sensor locations that reads and transforms Melbourne Data.
@@ -24,7 +24,7 @@ class MelbourneSensorLocationReader(spark: SparkSession){
   def read(): DataFrame =
     spark.read
       .option("header", true)
-      .option("inferSchema", true)
+      .schema(Encoders.product[SensorLocations].schema)
       .csv(Configuration().MelbourneSensorLocationsRawDataPath)
 }
 
