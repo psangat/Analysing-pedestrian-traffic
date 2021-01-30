@@ -32,6 +32,6 @@ class NoOpDataFrameDescriptor extends DataFrameDescriptor{
 class DebugDataFrameDescriptor extends DataFrameDescriptor{
   override def describe(df: DataFrame): Unit = {
     df.show(truncate = false)
-    df.describe().show(truncate = false)
+    df.summary().show(truncate = false)
   }
 }
