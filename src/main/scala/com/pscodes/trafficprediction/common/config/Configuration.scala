@@ -6,6 +6,7 @@ import scala.util.Try
 trait Configuration {
   val LocalSpark:Boolean
   val DebugEnabled:Boolean
+  val FeedsRootPath: String
   val MelbourneSensorLocationsRawDataPath: String
   val MelbournePedestrianCountRawDataPath: String
 }
@@ -28,6 +29,7 @@ object Configuration{
 object ConfigurationProperties extends Configuration{
   val LocalSpark:Boolean = Try(System.getenv("spark.local").equals("true")).getOrElse(false)
   val DebugEnabled: Boolean = Try(System.getenv("debug.enabled").equals("true")).getOrElse(false)
+  val FeedsRootPath: String = System.getenv("feeds.root.path")
   val MelbourneSensorLocationsRawDataPath: String = System.getenv("melbourne.sensor.locations.path")
   val MelbournePedestrianCountRawDataPath: String = System.getenv("melbourne.pedestrian.count.path")
 }

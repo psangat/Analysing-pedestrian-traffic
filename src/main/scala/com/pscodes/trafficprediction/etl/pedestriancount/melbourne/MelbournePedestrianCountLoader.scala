@@ -36,5 +36,5 @@ class MelbournePedestrianCountTransformer {
       .withColumn("castedDateTime", f.to_timestamp(f.col(PedestrianCountColumnNames.DATETIME), "MM/dd/yyyy hh:mm:ss a" ))
       .drop(f.col(PedestrianCountColumnNames.DATETIME))
       .withColumnRenamed("castedDateTime", PedestrianCountColumnNames.DATETIME )
-      .withColumn("above_threshold", f.when(f.col(PedestrianCountColumnNames.HOURLYCOUNTS ) < 2000,0).otherwise(1))
+      .withColumn("aboveThreshold", f.when(f.col(PedestrianCountColumnNames.HOURLYCOUNTS ) < 2000,0).otherwise(1))
 }
